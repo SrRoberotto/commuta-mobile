@@ -1,6 +1,6 @@
 import api from "./api-common";
 
-class DataService {
+class DataServices {
   getAreas() {
     return api.get("/areas");
   }
@@ -18,7 +18,7 @@ class DataService {
   }
 
   getOrganizationsById(id) {
-    return api.get(``/organizations/{id}``);
+    return api.get(`/organizations/${id}`);
   }
 
   getCities() {
@@ -26,7 +26,7 @@ class DataService {
   }
 
   getCitiesByState(state_id) {
-    return api.get(``/cities/{state_id}``);
+    return api.get(`/cities/${state_id}`);
   }
 
   //debug
@@ -36,8 +36,4 @@ class DataService {
 
 }
 
-// Route::post('/users', [UserController::class, 'store']);
-// Route::post('/login', [AuthController::class, 'logIn']);
-
-
-export default new DataService();
+export default new DataServices();

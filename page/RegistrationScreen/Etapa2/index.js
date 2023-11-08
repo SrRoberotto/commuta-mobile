@@ -6,7 +6,7 @@ import { useFormContext } from "../../../context/FormContext";
 import Input from "../../../components/Input";
 import AccordionItem from "../../../components/AccordionItem";
 
-import DataService from "../../../services/data.services";
+import DataServices from "../../../services/data.services";
 import styles from "./styles";
 
 //const STATIC_VARS = require('../../../utils/static');
@@ -64,9 +64,12 @@ function Etapa2({ navigation }) {
     if (selectedItemArea !== null && selectedItemSubArea !== null && selectedItemState !== null) {
       const data = {
         cargo,
-        area: selectedItemArea,
-        subArea: selectedItemSubArea,
-        uf: selectedItemState,
+        area_name: selectedItemArea,
+        area_id: areaValue,
+        subArea_name: selectedItemSubArea,
+        subarea_id: subAreaValue,
+        state_name: selectedItemState,
+        state_id: stateValue,
         orgao,
         cidade
       };
@@ -76,6 +79,7 @@ function Etapa2({ navigation }) {
         setLoading(true);
 
         updateFormData(data);
+        console.log("Form Data atualizado: \n",formData)
         navigation.navigate("Etapa3");
 
       } catch (e) {
@@ -90,7 +94,7 @@ function Etapa2({ navigation }) {
     try {
       setLoading(true)
 
-      const response = await DataService.getAreas()
+      const response = await DataServices.getAreas()
         .then(response => {
           var count = response.data.length;
           let arrayAreas = [];
@@ -119,7 +123,7 @@ function Etapa2({ navigation }) {
     try {
       setLoading(true)
 
-      const response = await DataService.getSubAreas()
+      const response = await DataServices.getSubAreas()
         .then(response => {
           var count = response.data.length;
           let arraySubAreas = [];
@@ -148,7 +152,7 @@ function Etapa2({ navigation }) {
     try {
       setLoading(true)
 
-      const response = await DataService.getStates()
+      const response = await DataServices.getStates()
         .then(response => {
           var count = response.data.length;
           let arrayEstados = [];

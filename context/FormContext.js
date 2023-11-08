@@ -7,6 +7,7 @@ export const FormProvider = ({ children }) => {
 
   const updateFormData = (data) => {
     setFormData({ ...formData, ...data });
+    console.log(formData)
   };
 
   return (
@@ -17,5 +18,6 @@ export const FormProvider = ({ children }) => {
 };
 
 export const useFormContext = () => {
+  
   return useContext(FormContext);
 };

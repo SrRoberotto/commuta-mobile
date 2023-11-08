@@ -1,5 +1,5 @@
 import React ,  {useState} from "react";
-import { View, Text, StyleSheet, TouchableOpacity , Keyboard} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity , Keyboard, Alert} from "react-native";
 import { ProgressBar } from "react-native-paper";
 import Input from "../../../components/Input";
 import { TextInput } from "react-native-paper";
@@ -8,9 +8,11 @@ import styles from "./styles";
 import { useForm } from "react-hook-form";
 import { useFormContext } from "../../../context/FormContext";
 
+import UserServices from "../../../services/user.services";
+
 function Etapa4({ navigation }) {
   const { formData, updateFormData } = useFormContext(); 
-  const [loading, setLoading] = useState(false);
+  const [ loading, setLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -22,13 +24,78 @@ function Etapa4({ navigation }) {
       email,
       senha
     }
+
+    // const teste = {
+    //   "area_id": 1,
+    //   "area_name": "Ciências Exatas e da Terra", 
+    //   "cargo": "Tecnico",
+    //   "checkedNumberOne": false,
+    //   "checkedNumberTwo": false,
+    //   "cidade": "Acrelandia",
+    //   "codigo": undefined,
+    //   "colecaoCidades": ["EUNAPOLIS"],
+    //   "colecaoEstados": ["BA"],
+    //   "imagePerfil": null,
+    //   "nome": "Roberto",
+    //   "orgao": "Instituto Federal da Bahia",
+    //   "sobrenome": "Melo",
+    //   "state_id": 1,
+    //   "state_name": "AC",
+    //   "subArea_name": "Matemática",
+    //   "subarea_id": 1,
+    //   "telefoneOne": undefined,
+    //   "telefoneTwo": undefined
+    // }
+    const userData = {
+        "email": email,
+        "password": senha,
+        "password_confirmation": senha,
+        "first_name": formData.nome,
+        "last_name": formData.sobrenome,
+        "genre": "M", //Falta isse campo
+        "phone": formData.telefoneOne,
+        "bio": "nice nice nice", //Falta esse campo
+        "region_id": 2,  //Falta esse campo
+        "state_id": formData.state_id,
+        "city_id": 1953, //Falta esse campo
+        "area_id": formData.area_id,
+        "subarea_id": formData.subarea_id,
+        "title_id": 1, //Falta esse campo
+        "organization_id": 5
+    }
+
     try {
       Keyboard.dismiss();
       setLoading(true);
       updateFormData(data);
-      navigation.navigate("ConfirmEmail")
+      console.log("Form Data atualizado: \n",formData)
+      console.log("UserData: ", userData)
+      
+      const response = await UserServices.createUser(userData)
+        .then(response => {
+          
+          //verificar se foi aceito e redirecionar à página de confirmação
+          console.log("Resposta:\n", response)
+          navigation.navigate("ConfirmEmail")
+          setLoading(false)
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log("Erro retornado: ", error.response.status);
+            console.log("Dados do erro:\n",error.response.data);
+            
+            
+            Alert.alert('Erro no cadastro',
+              "Ocorreu um erro durante o processamento do seu cadastro.\n\n"+
+              `Código de erro: ${error.response.status}\n`+
+              `Mensagem de erro: ${error.response.data.message}`);
+            console.log(error.response.headers);
+          }
+        });
 
-      console.log(formData)
+      //navigation.navigate("ConfirmEmail")
+      
+
     } catch (e) {
       setLoading(false);
       //ShowAlert("Erro", e.message);

@@ -7,7 +7,7 @@ import styles from "./styles";
 import { useForm } from "react-hook-form";
 import AccordionItem from "../../../components/AccordionItem";
 import { useFormContext } from "../../../context/FormContext";
-import DataService from "../../../services/data.services";
+import DataServices from "../../../services/data.services";
 
 const Etapa3 = ({ navigation }) => {
   const [estadoSelecionado, setEstadoSelecionado] = useState("");
@@ -73,6 +73,7 @@ const Etapa3 = ({ navigation }) => {
         setErro(false)
         setLoading(true);
         updateFormData(data);
+        console.log("Form Data atualizado: \n",formData)
         navigation.navigate("Etapa4");
       }
       catch{
@@ -90,7 +91,7 @@ const Etapa3 = ({ navigation }) => {
     try {
       setLoading(true)
 
-      const response = await DataService.getOrganizations()
+      const response = await DataServices.getOrganizations()
         .then(response => {
           var count = response.data.length;
           let arrayOrganizations = [];
