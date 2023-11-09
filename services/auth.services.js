@@ -1,29 +1,30 @@
 import api from "./api-common";
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AuthServices {
 // Route::post('/users', [UserController::class, 'store']);
 // Route::post('/login', [AuthController::class, 'logIn']);
 
-    const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('/api/auth/login', {
-      email,
-      password,
-    });
+    async signIn(data) {
+    const response = await api.post('/login', data);
 
-    const { access_token } = response.data;
+    
 
-    await AsyncStorage.multiSet([
-      ['@GoBarber:token', access_token],
-    ]);
+    //console.log("Resposta:\n",token)
 
-    setData({ access_token });
-  }, []);
+    // await AsyncStorage.multiSet([
+    //   ['@Commuta:token', access_token],
+    // ]);
 
-  const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@GoBarber:token']);
+    // setData({ access_token });
+    return response
+  }
 
-    setData({} as AuthState);
-  }, []);
+  async signOut () {
+    await AsyncStorage.multiRemove(['@Commuta:token']);
 
+    setData({});
+  }
+}
 
 export default new AuthServices();

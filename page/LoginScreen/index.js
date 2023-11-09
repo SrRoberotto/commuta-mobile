@@ -1,4 +1,4 @@
-import React, { useState,useCallback } from "react";
+import React, { useState } from "react";
 import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useForm } from "react-hook-form";
@@ -8,12 +8,13 @@ import { Keyboard, Alert } from "react-native";
 import Input from "../../components/Input";
 //import { useAuth } from '../../hooks/auth';
 
-import DataService from "../../services/data.services";
-
+import AuthServices from "../../services/auth.services";
+import { useAuthContext } from "../../context/AuthContext";
 
 
 function LoginScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
+  const { authData, updateAuthData } = useAuthContext(); 
 
   const {
     handleSubmit,
@@ -28,11 +29,39 @@ function LoginScreen({ navigation }) {
 
   const onSubmit = async ({ email, senha }) => {
     const data = {
-      email, senha
+      email, "password":senha, "device_name":"celular"
     };
     try {
       Keyboard.dismiss();
       setLoading(true);
+
+      const response = await AuthServices.signIn(data)
+        .then(response => {
+          
+          //verificar se foi aceito e redirecionar à página de confirmação
+          
+          const { token } = response.data;
+          console.log("Token:\n", token)
+
+          setLoading(false)
+          updateAuthData(token);
+          navigation.navigate("Home")
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log("Erro retornado: ", error.response.status);
+            console.log("Dados do erro:\n",error.response.data);
+            console.log("error:\n",error)
+            
+            
+            Alert.alert('Erro no Login',
+              "Ocorreu um erro durante o login.\n\n"+
+              `Código de erro: ${error.response.status}\n`+
+              `Mensagem de erro: ${error.response.data.message}`);
+              console.log(error.response.headers);
+          }
+        });
+
       // Alert.alert("Data", data.email);
       // // ShowAlert("Data", data.email);
       // console.log ("------------")
@@ -55,7 +84,7 @@ function LoginScreen({ navigation }) {
       //console.log(signIn);
       
       //  Alert.alert("Login", "Login feito");
-      navigation.navigate("Home")
+      //navigation.navigate("Home")
     } catch (e) {
       setLoading(false);
       //ShowAlert("Erro", e.message);

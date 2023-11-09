@@ -2,27 +2,18 @@ import api from "./api-common";
 
 class UserServices {
     async createUser(data) {
-        // {
-        //     "email": "pedro@email.com",
-        //     "password": "12345678",
-        //     "password_confirmation": "12345678",
-        //     "first_name": "Pedro",
-        //     "last_name": "Pereira",
-        //     "genre": "M",
-        //     "phone": "5573981829000",
-        //     "bio": "nice nice nice",
-        //     "region_id": 2,
-        //     "state_id": 5,
-        //     "city_id": 1953,
-        //     "area_id": 1,
-        //     "subarea_id": 2,
-        //     "title_id": 1,
-        //     "organization_id": 5
-        // } 
 
         const response = await api.post("/users",data);
 
         const { access_token } = response.data;
+        return response;
+    }
+
+    async getMe(authData){
+        console.log("authData: ",authData)
+        const response = await api.get("/me");
+        
+
         return response;
     }
 

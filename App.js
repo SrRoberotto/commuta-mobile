@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import AppTabs from "./router/BottomTabs";
-import AuthRouter from "./router/AuthRouter";
+import AppRouter from "./router/AppRouter";
 import { FormProvider } from "./context/FormContext";
+import { AuthProvider } from "./context/AuthContext";
 export default function App() {
   let [fontsLoaded] = useFonts({
     MontserratBold: require("./assets/fontes/Montserrat-Bold.ttf"),
@@ -21,7 +22,9 @@ export default function App() {
           translucent={true} // Tornar a barra de status transparente
         />
         <FormProvider>
-          <AuthRouter />
+          <AuthProvider>
+            <AppRouter />
+          </AuthProvider>
         </FormProvider>
       </NavigationContainer>
     );

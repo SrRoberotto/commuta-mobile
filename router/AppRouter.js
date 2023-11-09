@@ -14,7 +14,7 @@ import SettingsScreen from "../page/SettingsScreen/index.js";
 
 const Stack = createStackNavigator();
 
-export default function AuthRouter() {
+export default function AppRouter() {
   return (
     <Stack.Navigator s screenOptions={{
       headerStyle: {

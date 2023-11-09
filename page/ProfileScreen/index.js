@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import { Avatar, Provider, Button, Portal, Divider } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -14,11 +15,51 @@ import CustomInput from "../../components/CustomInput";
 import { AntDesign } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 
+import UserServices from "../../services/user.services";
+import { useAuthContext } from "../../context/AuthContext";
+
 function ProfileScreen({ navigation }) {
   const [menuVisible, setMenuVisible] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const { authData, updateAuthData } = useAuthContext(); 
 
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
+
+
+  async function fetchMe() {
+    try {
+      //setLoading(true)
+
+      const response = await UserServices.getMe(authData)
+        .then(response => {
+          var count = response.data.length;
+          //console.log (response)
+
+          //setUserData(arrayAreas);
+          setLoading(false)
+        })
+        .catch(error => {
+          console.log(error);
+          
+          console.log("Erro retornado: ", error.response.status);
+          console.log("Dados do erro:\n",error.response.data);
+
+          Alert.alert('Erro na requisição',error.response.status + ": " + error.response.data.message);
+
+          }
+        );
+    } catch (error) {
+      console.log(error)
+      console.log("Erro retornado: ", error.response.status);
+      console.log("Dados do erro:\n",error.response.data);
+    } finally {
+      //setLoading(false)
+    }
+  }
+
+
+  useEffect(() => { fetchMe(); }, [userData.length < 1]);
 
   return (
     <ScrollView style={styles.container}>
