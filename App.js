@@ -6,8 +6,11 @@ import AppTabs from "./router/BottomTabs";
 import AppRouter from "./router/AppRouter";
 import { FormProvider } from "./context/FormContext";
 import { AuthProvider } from "./context/AuthContext";
+import { PlanoProvider } from "./context/PlanoContext";
+
 export default function App() {
   let [fontsLoaded] = useFonts({
+    MontserratBlack: require("./assets/fontes/Montserrat-Black.ttf"),
     MontserratBold: require("./assets/fontes/Montserrat-Bold.ttf"),
     MontserratMedium: require("./assets/fontes/Montserrat-Medium.ttf"),
     MontserratRegular: require("./assets/fontes/Montserrat-Regular.ttf"),

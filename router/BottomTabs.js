@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../page/HomeScreen/index";
 import ContactsScreen from "../page/ContactsScreen/index";
-import SearchScreen from "../page/SearchScreen/index";
+import SearchScreen from "../page/SearchScreen/index_old";
 import PreferencesScreen from "../page/PreferencesScreen/index";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";

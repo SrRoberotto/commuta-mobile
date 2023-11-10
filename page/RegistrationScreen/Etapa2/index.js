@@ -183,7 +183,8 @@ function Etapa2({ navigation }) {
 
   //useEffect(() => {console.log("Area: ",selectedItemArea," - SubArea: ",selectedItemSubArea);},[selectedItemArea,selectedItemSubArea]);
   return (
-    <View style={styles.container}>
+  <View style={styles.container}>
+    <View>
       <View style={styles.navbar}>
         <Text style={styles.titulo}>Cadastro</Text>
       </View>
@@ -297,26 +298,24 @@ function Etapa2({ navigation }) {
           required: "Verifique se todos os campos estão preenchidos",
         }}
       />
-      {errors.orgao && <Text style={styles.error}>Esse campo é obrigatório</Text>}
-
-      <View style={{ flex: 1, justifyContent: "flex-end", paddingBottom: 15 }}>
-        <View style={{ justifyContent: "space-between", alignItems: "center", flexDirection: "row", paddingHorizontal: 10 }}>
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: "white" }]}
-            onPress={() => navigation.navigate("Cadastro")}
-          >
-            <Text style={[styles.labelButton, { color: "#4B3EFF" }]}>Anterior</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Etapa3")}
-          >
-            <Text style={styles.labelButton} onPress={handleSubmit(onSubmit)} >Próximo</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
     </View>
-  );
+    {errors.orgao && <Text style={styles.error}>Esse campo é obrigatório</Text>}
+    <View style={{ justifyContent: "space-between", alignItems: "center", flexDirection: "row", paddingHorizontal: 10 }}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "white" }]}
+        onPress={() => navigation.navigate("Cadastro")}
+      >
+        <Text style={[styles.labelButton, { color: "#4B3EFF" }]}>Anterior</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        
+      >
+        <Text style={styles.labelButton} onPress={handleSubmit(onSubmit)} >Próximo</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+  ); //onPress={() => navigation.navigate("Etapa3")} <View style={{ flex: 1, justifyContent: "flex-end", paddingBottom: 15 }}>
 }
 
 export default Etapa2;

@@ -43,14 +43,14 @@ const Etapa3 = ({ navigation }) => {
   };
 
   const handleChangeColecaoEstado = () => {
-    if (estadoSelecionado.length>0){
+    if(estadoSelecionado!==""){
       setColecaoEstados([...colecaoEstados, estadoSelecionado]);
       setEstadoSelecionado("");
     }
   };
 
   const handleChangeColecaoCidade = () => {
-    if (cidadeSelecionada.length>0){
+    if (cidadeSelecionada!==""){
       setColecaoCidades([...colecaoCidades, cidadeSelecionada]);
       setCidadeSelecionada("");
     }

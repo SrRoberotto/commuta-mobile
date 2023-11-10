@@ -14,7 +14,7 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import styles from "./styles";
+
 
 function SearchResultCard({ data, item, removeCard, onSwipe }) {
   const window = useWindowDimensions();
@@ -43,7 +43,7 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
           gestureState.dx < window.width - 150 &&
           gestureState.dx > -window.width + 150
         ) {
-          onSwipe("--");
+          swipedDirection("--");
           Animated.spring(xPosition, {
             toValue: 0,
             speed: 5,
@@ -63,7 +63,7 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
               useNativeDriver: false,
             }),
           ]).start(() => {
-            onSwipe("Direita");
+            swipedDirection("Direita");
             removeCard();
           });
         } else if (gestureState.dx < -window.width + 150) {
@@ -79,14 +79,13 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
               useNativeDriver: false,
             }),
           ]).start(() => {
-            onSwipe("Esquerda");
+            swipedDirection("Esquerda");
             removeCard();
           });
         }
       },
     })
   ).current;
-
   return (
     <Animated.View
       {...panResponder.panHandlers}
@@ -119,39 +118,14 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
       >
         <TouchableOpacity
           style={[styles.button, styles.outline]}
-          onPress={() => {
-            setCardDismissed(true);
-            setIgnoredCards([...ignoredCards, item]);
-            Animated.timing(xPosition, {
-              toValue: -window.width,
-              duration: 200,
-              useNativeDriver: false,
-            }).start(() => {
-              onSwipe("Esquerda");
-              removeCard();
-            });
-          }}
+          onPress={null}
         >
-         <MaterialIcons name="thumb-down" size={20} color="#333333" />
+          <AntDesign name="dislike1" size={20} color="#333333" />
           <Text style={[styles.labelbutton, { color: "#333333" }]}>
             Ignorar
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setCardDismissed(true);
-            setLikedCards([...likedCards, item]);
-            Animated.timing(xPosition, {
-              toValue: window.width,
-              duration: 200,
-              useNativeDriver: false,
-            }).start(() => {
-              onSwipe("Direita");
-              removeCard();
-            });
-          }}
-        >
+        <TouchableOpacity style={styles.button} onPress={null}>
           <Text style={styles.labelbutton}>Gostei</Text>
           <AntDesign name="like1" size={20} color="white" />
         </TouchableOpacity>
@@ -160,6 +134,67 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
   );
 }
 
+const styles = StyleSheet.create({
+  card: {
+    gap: 8,
+    marginTop: 2,
+    padding: 12,
+    position: "absolute",
 
+    backgroundColor: "white",
+    borderRadius: 14,
+    shadowColor: "#000000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    elevation: 3,
+    marginBottom: 16,
+  },
+  titulo: {
+    fontFamily: "MontserratMedium",
+    fontSize: 16,
+    color: "#000000",
+    lineHeight: 24,
+    padding: 0,
+    marginBottom: 8,
+  },
+  containerRow: {
+    flexDirection: "row",
+    gap: 5,
+  },
+  label: {
+    fontSize: 16,
+    fontFamily: "MontserratRegular",
+    color: "#333",
+    marginBottom: 8,
+    width: "92%",
+  },
+  labelbutton: {
+    fontSize: 18,
+    fontFamily: "MontserratMedium",
+    color: "white",
+    marginBottom: 8,
+  },
+  smalLabel: {
+    fontSize: 12,
+    fontFamily: "MontserratRegular",
+    color: "white",
+  },
+  button: {
+    flexDirection: "row",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 12,
+    gap: 8,
+    backgroundColor: "#4B3EFF",
+    alignItems: "center",
+  },
+  outline: {
+    backgroundColor: "white",
+  },
+});
 
 export default SearchResultCard;
