@@ -5,8 +5,22 @@ import { List } from "react-native-paper";
 import { EvilIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import styles from "./styles";
 
-function CardContacts({ navigation }) {
+// "id": 4,
+// "user_id": 3,
+// "contact_id": 2,
+// "contact_name": "Pedro",
+// "contact_organization_name": "Instituto Federal da Bahia",
+// "contact_organization_acronym": "IFBA",
+// "contact_city_name": "Eunápolis",
+// "contact_state_uf": "BA",
+// "contact_area_name": "Ciências Exatas e da Terra",
+// "contact_subarea_name": "Ciência da Computação",
+// "contact_title_name": "Professor EBTT"
+
+
+function CardContacts({navigation,contact,user}) {
   return (
     <TouchableOpacity
       onPress={() => {
@@ -23,13 +37,13 @@ function CardContacts({ navigation }) {
         <Avatar.Image size={48} source={require("../../assets/avatar2.png")} />
       </View>
       <View style={{ width: "80%" }}>
-        <Text style={styles.titulo}>Amanda Oliveira Souza</Text>
-        <Text style={styles.label}>Professor (Matemática)</Text>
+        <Text style={styles.titulo}>{contact.contact_name}</Text>
+        <Text style={styles.label}>{contact.contact_title_name} ({contact.contact_subarea_name})</Text>
         <View style={styles.containerRow}>
-          <Text style={styles.smalLabel}>Rio de Janeiro (RJ)</Text>
+          <Text style={styles.smalLabel}>{contact.contact_city_name} ({contact.contact_state_uf})</Text>
           <View style={{ flexDirection: "row" }}>
             <MaterialIcons name="loop" size={16} color="#8178FF" />
-            <Text style={styles.smalLabel}>Eunápolis (BA)</Text>
+            <Text style={styles.smalLabel}>{user.city_name} ({user.state_uf}</Text>
           </View>
         </View>
       </View>
@@ -37,48 +51,6 @@ function CardContacts({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: "row",
-    gap: 8,
-    marginTop: 2,
-    padding: 16,
-    paddingLeft: 8,
-    backgroundColor: "white",
-    borderRadius: 14,
-    shadowColor: "#000000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    elevation: 3,
-    marginBottom: 16,
-  },
-  titulo: {
-    fontFamily: "MontserratMedium",
-    fontSize: 16,
-    color: "#000000",
-    lineHeight: 24,
-    padding: 0,
-    marginBottom: 8,
-  },
-  containerRow: {
-    flexDirection: "row",
-    gap: 8.5,
-  },
-  label: {
-    fontSize: 16,
-    fontFamily: "MontserratRegular",
-    color: "#1A1A1A",
-    marginBottom: 8,
-  },
-  smalLabel: {
-    fontSize: 12,
-    fontFamily: "MontserratRegular",
-    color: "#333333",
-  },
-});
+
 
 export default CardContacts;

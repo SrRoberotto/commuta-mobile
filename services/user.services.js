@@ -5,17 +5,24 @@ class UserServices {
 
         const response = await api.post("/users",data);
 
-        const { access_token } = response.data;
+        // const { access_token } = response.data;
+
         return response;
     }
 
-    async getMe(authData){
-        console.log("authData: ",authData)
+    async getMe(){
         const response = await api.get("/me");
         
-
         return response;
     }
+
+    
+    async getUserByID(id){
+        const response = await api.get(`/users/${id}`);
+        
+        return response;
+    }
+
 
 }   
 // Route::post('/users', [UserController::class, 'store']);

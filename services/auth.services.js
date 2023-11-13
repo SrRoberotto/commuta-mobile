@@ -5,19 +5,15 @@ class AuthServices {
 // Route::post('/users', [UserController::class, 'store']);
 // Route::post('/login', [AuthController::class, 'logIn']);
 
-    async signIn(data) {
+  async signIn(data) {
     const response = await api.post('/login', data);
 
-    
-
-    //console.log("Resposta:\n",token)
-
-    // await AsyncStorage.multiSet([
-    //   ['@Commuta:token', access_token],
-    // ]);
-
-    // setData({ access_token });
     return response
+  }
+
+  storeToken(token){
+    api.defaults.headers.common = {'Authorization': `Bearer ${token}`}
+    console.log("Token guardado: ",token)
   }
 
   async signOut () {

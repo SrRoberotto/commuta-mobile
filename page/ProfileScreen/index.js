@@ -18,6 +18,7 @@ import styles from "./styles";
 import PlanoAnualModal from "../../components/PlanoAnualModal";
 
 import UserServices from "../../services/user.services";
+import DataServices from "../../services/data.services";
 import { useAuthContext } from "../../context/AuthContext";
 
 function ProfileScreen({ navigation }) {
@@ -27,27 +28,28 @@ function ProfileScreen({ navigation }) {
   const closeMenu = () => setMenuVisible(false);
 
   const [userData, setUserData] = useState([]);
-  const {authData, updateAuthData } = useAuthContext(); 
+  // const [organizationName, setOrganizationName] = useState();
+  // const [cityName, setCityName] = useState();
+  // const {authToken, setAuthToken } = useAuthContext(); 
 
   async function fetchMe() {
     try {
-      //setLoading(true)
-
-      const response = await UserServices.getMe(authData)
+      const response = await UserServices.getMe()
         .then(response => {
-          var count = response.data.length;
-          //console.log (response)
+          //var count = response.data.length;
+          //console.log ("Resposta do GetMe: ",response.data)
 
-          //setUserData(arrayAreas);
-          setLoading(false)
+          setUserData(response.data);
+          console.log ("User Data: ",userData)
+          //setLoading(false)
         })
         .catch(error => {
           console.log(error);
           
-          console.log("Erro retornado: ", error.response.status);
-          console.log("Dados do erro:\n",error.response.data);
+          // console.log("Erro retornado: ", error.response.status);
+          // console.log("Dados do erro:\n",error.response.data);
 
-          Alert.alert('Erro na requisição',error.response.status + ": " + error.response.data.message);
+          // Alert.alert('Erro na requisição',error.response.status + ": " + error.response.data.message);
 
           }
         );
@@ -59,7 +61,6 @@ function ProfileScreen({ navigation }) {
       //setLoading(false)
     }
   }
-
 
   useEffect(() => { fetchMe(); }, [userData.length < 1]);
 
@@ -85,7 +86,7 @@ function ProfileScreen({ navigation }) {
               source={require("../../assets/avatar.png")}
             />
             <Text style={[styles.titulo, { marginTop: 10 }]}>
-              Lucas Pereira Santos
+              {userData.first_name} {userData.last_name}
             </Text>
             <TouchableOpacity style={styles.button} onPress={()=> setVisible(true)}>
               <Text style={styles.labelbutton}>Seja Premium</Text>
@@ -98,17 +99,19 @@ function ProfileScreen({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <CustomInput label="Email:" value="lucaspereira@email.com" />
-        <CustomInput label="Telefone:" value="(73) 98123-4567" />
+        <CustomInput label="Email:" value={userData.email} />
+        <CustomInput label="Telefone:" value={userData.phone} />
         <CustomInput
           label="Profissão:"
           value="Professor (Matemática - Estatística)"
         />
         <CustomInput
+          onChangeText={()=>{return true}}
           label="Órgão Institucional:"
-          value="Instituto Federal de Educação Ciência e Tecnologia"
+
+          value={userData.organization_name}
         />
-        <CustomInput label="Local:" value="Eunápolis (BA)" />
+        <CustomInput label="Local:" value={`${userData.city_title} (${userData.state_letter})`} />
         <Portal>
           {menuVisible && (
             <View style={styles.menu}>

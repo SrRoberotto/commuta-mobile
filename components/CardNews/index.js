@@ -3,15 +3,17 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import styles from "./styles";
 
-function CardNews({ navigation }) {
+function CardNews({navigation,data}) {
+  //console.log(data)
   return (
     <View style={styles.card}>
       <View style={{ width: "90%" }}>
-        <Text style={styles.titulo}>Professor (Matemática)</Text>
+        <Text style={styles.titulo}>{data.title_name}({data.subarea_name})</Text>
         <View style={styles.containerRow}>
           <Entypo name="star" size={16} color="#8178FF" />
-          <Text style={styles.label}>Deseja: Eunápolis (BA)</Text>
+          <Text style={styles.label}>Deseja: {data.interest_city_name} (BA)</Text>
         </View>
         <View style={styles.containerRow}>
           <Entypo name="location-pin" size={16} color="#333333" />
@@ -28,41 +30,6 @@ function CardNews({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: "row",
-    marginTop: 2,
-    padding: 16,
-    backgroundColor: "white",
-    borderRadius: 14,
-    shadowColor: "#000000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    elevation: 3,
-    marginBottom: 16,
-  },
-  titulo: {
-    fontFamily: "MontserratMedium",
-    fontSize: 16,
-    color: "#000000",
-    lineHeight: 24,
-    padding: 0,
-    marginBottom: 17,
-  },
-  containerRow: {
-    flexDirection: "row",
-    gap: 8.5,
-  },
-  label: {
-    fontSize: 14,
-    fontFamily: "MontserratRegular",
-    color: "#333333",
-    paddingBottom: 8,
-  },
-});
+
 
 export default CardNews;

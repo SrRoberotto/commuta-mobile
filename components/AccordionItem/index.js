@@ -22,6 +22,7 @@ const AccordionItem = ({ expanded, onPress, title, id, children, style, setSelec
         marginBottom: 16,
         height: 48,
         color: "#808080",
+        
         ...style 
       }}
     >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Keyboard } from "react-native";
+import { View, Text, TouchableOpacity, Keyboard, ScrollView } from "react-native";
 import { List, ProgressBar } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { useFormContext } from "../../../context/FormContext";
@@ -17,19 +17,29 @@ function Etapa2({ navigation }) {
   const [expandedArea, setExpandedArea] = useState(false);
   const [expandedSubArea, setExpandedSubArea] = useState(false);
   const [expandedState, setExpandedState] = useState(false);
+  const [expandedCargo, setExpandedCargo] = useState(false);
+  const [expandedCity, setExpandedCity] = useState(false);
+  const [expandedOrganization, setExpandedOrganization] = useState(false);
 
   const [selectedItemArea, setSelectedItemArea] = useState(null);
   const [selectedItemSubArea, setSelectedItemSubArea] = useState(null);
   const [selectedItemState, setSelectedItemState] = useState(null);
+  const [selectedItemCargo, setSelectedItemCargo] = useState(null);
+  const [selectedItemCity, setSelectedItemCity] = useState(null);
+  const [selectedItemOrganization, setSelectedItemOrganization] = useState(null);
 
   const [stateValue, setStateValue] = useState(null);
   const [areaValue, setAreaValue] = useState(null);
+  const [cargoValue, setCargoValue] = useState(null);
   const [subAreaValue, setSubAreaValue] = useState(null);
   const [subAreasList, setSubAreasList] = useState([]);
+  const [organizationValue, setOrganizationValue] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [cargoDropDown, setCargoDropDown] = useState([]);
   const [areaDropDown, setAreaDropDown] = useState([]);
   const [subAreaDropDown, setSubAreaDropDown] = useState([]);
+  const [organizationDropDown, setOrganizationDropDown] = useState([]);
   const [estadosDropDown, setEstadosDropDown] = useState([]);
   const { formData, updateFormData } = useFormContext();
 
@@ -52,6 +62,18 @@ function Etapa2({ navigation }) {
     setSelectedItemState(item.uf);
     setStateValue(item.state_id);
     setExpandedState(false);
+  };
+
+  const handleCargo = (item) => {
+    setSelectedItemCargo(item.title_name);
+    setCargoValue(item.title_id);
+    setExpandedCargo(false);
+  };
+
+  const handleOrganization = (item) => {
+    setSelectedItemOrganization(item.organization_name);
+    setOrganizationValue(item.organization_id);
+    setExpandedOrganization(false);
   };
 
   const {
@@ -119,6 +141,35 @@ function Etapa2({ navigation }) {
     }
   }
 
+  async function fetchCargos() {
+    try {
+      setLoading(true)
+
+      const response = await DataServices.getCargos()
+        .then(response => {
+          var count = response.data.length;
+          let arrayCargos = [];
+
+          for (var i = 0; i < count; i++) {
+            arrayCargos.push(
+              response.data[i]
+            );
+          }
+          console.log ("Array Cargos: ", arrayCargos)
+
+          setCargoDropDown(arrayCargos);
+          setLoading(false)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   async function fetchSubAreas() {
     try {
       setLoading(true)
@@ -147,6 +198,36 @@ function Etapa2({ navigation }) {
       setLoading(false)
     }
   }
+
+  async function fetchOrganizations() {
+    try {
+      setLoading(true)
+
+      const response = await DataServices.getOrganizations()
+        .then(response => {
+          var count = response.data.length;
+          let arrayOrganizations = [];
+
+          for (var i = 0; i < count; i++) {
+            arrayOrganizations.push(
+              response.data[i]
+            );
+          }
+          console.log ("Array Organizations: ", arrayOrganizations)
+
+          setOrganizationDropDown(arrayOrganizations);
+          setLoading(false)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
 
   async function fetchStates() {
     try {
@@ -178,6 +259,8 @@ function Etapa2({ navigation }) {
 
   useEffect(() => { fetchAreas(); }, []);
   useEffect(() => { fetchStates(); }, []);
+  useEffect(() => { fetchCargos(); }, []);
+  useEffect(() => { fetchOrganizations(); }, []);
   useEffect(() => { fetchSubAreas(); setSubAreaDropDown(subAreasList); }, [subAreasList.length < 1]);
   useEffect(() => { setSubAreaDropDown(subAreasList.filter((v, i) => v.area_id == areaValue)); }, [areaValue]);
 
@@ -198,7 +281,7 @@ function Etapa2({ navigation }) {
         </Text>
       </View>
 
-      <Input
+      {/* <Input
         placeholderName="Cargo"
         name="cargo"
         control={control}
@@ -206,7 +289,28 @@ function Etapa2({ navigation }) {
           required: "Verifique se todos os campos estão preenchidos",
         }}
       />
-      {errors.cargo && <Text style={styles.error}>Esse campo é obrigatório</Text>}
+      {errors.cargo && <Text style={styles.error}>Esse campo é obrigatório</Text>} */}
+
+      <AccordionItem
+        control={control}
+        expanded={expandedCargo}
+        onPress={() => setExpandedCargo(!expandedCargo)}
+        title={selectedItemCargo || "Cargo"}
+        setSelectedItem={setSelectedItemCargo}
+        id="4"
+      >
+        <ScrollView>
+          {cargoDropDown.length > 0 ?
+            cargoDropDown.map((item) => {
+              //console.log(item)
+              return (
+                <List.Item title={item.title_name} onPress={() => handleCargo(item)} />
+              )
+            }) : (
+              <List.Item title="Carregando cargos..." />
+            )}
+        </ScrollView>
+      </AccordionItem>
 
       <AccordionItem
         control={control}
@@ -216,7 +320,7 @@ function Etapa2({ navigation }) {
         setSelectedItem={setSelectedItemArea}
         id="1"
       >
-        <View>
+        <ScrollView>
           {areaDropDown.length > 0 ?
             areaDropDown.map((item) => {
               //console.log(item)
@@ -226,7 +330,7 @@ function Etapa2({ navigation }) {
             }) : (
               <List.Item title="Carregando áreas..." />
             )}
-        </View>
+        </ScrollView>
       </AccordionItem>
 
       <AccordionItem
@@ -237,7 +341,7 @@ function Etapa2({ navigation }) {
         setSelectedItem={setSelectedItemSubArea}
         control={control}// Passa a função setSelectedItem para o AccordionItem
       >
-        <View>
+        <ScrollView>
           {subAreaDropDown.length > 0 ?
             subAreaDropDown.map((item) => {
               //console.log(item)
@@ -247,7 +351,7 @@ function Etapa2({ navigation }) {
             }) : (
               <List.Item title="Carregando Subáreas..." />
             )}
-        </View>
+        </ScrollView>
       </AccordionItem>
 
       <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: "center" }}>
@@ -289,15 +393,26 @@ function Etapa2({ navigation }) {
         </View>
       </View>
 
-      <Input
-        placeholderName={"Órgão institucional"}
-        name={"orgao"}
+      <AccordionItem
         control={control}
-        stylesInput={styles.inputOrgao}
-        rules={{
-          required: "Verifique se todos os campos estão preenchidos",
-        }}
-      />
+        expanded={expandedOrganization}
+        onPress={() => setExpandedOrganization(!expandedOrganization)}
+        title={selectedItemOrganization || "Órgão Público"}
+        setSelectedItem={setSelectedItemOrganization}
+        id="5"
+      >
+        <ScrollView>
+          {organizationDropDown.length > 0 ?
+            organizationDropDown.map((item) => {
+              //console.log(item)
+              return (
+                <List.Item title={item.organization_name} onPress={() => handleOrganization(item)} />
+              )
+            }) : (
+              <List.Item title="Carregando órgãos..." />
+            )}
+        </ScrollView>
+      </AccordionItem>
     </View>
     {errors.orgao && <Text style={styles.error}>Esse campo é obrigatório</Text>}
     <View style={{ justifyContent: "space-between", alignItems: "center", flexDirection: "row", paddingHorizontal: 10 }}>
@@ -309,13 +424,13 @@ function Etapa2({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        
+        onPress={() => navigation.navigate("Etapa3")} 
       >
         <Text style={styles.labelButton} onPress={handleSubmit(onSubmit)} >Próximo</Text>
       </TouchableOpacity>
     </View>
   </View>
-  ); //onPress={() => navigation.navigate("Etapa3")} <View style={{ flex: 1, justifyContent: "flex-end", paddingBottom: 15 }}>
+  ); //<View style={{ flex: 1, justifyContent: "flex-end", paddingBottom: 15 }}>
 }
 
 export default Etapa2;

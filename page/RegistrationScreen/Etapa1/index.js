@@ -70,7 +70,7 @@ function Etapa1({ navigation }) {
         style={styles.input}
         name={"nome"}
         control={control}
-        //rules={{ required: "Verifique se todos os campos estão preenchidos"}}
+        rules={{ required: "Verifique se todos os campos estão preenchidos"}}
       />
        {errors.nome && <Text style={styles.error}>Esse campo é obrigatório</Text>}
       <Input
@@ -78,7 +78,7 @@ function Etapa1({ navigation }) {
         style={styles.input}
         name={"sobrenome"}
         control={control}
-        //rules={{required: "Verifique se todos os campos estão preenchidos"}}
+        rules={{required: "Verifique se todos os campos estão preenchidos"}}
       />
        {errors.sobrenome && <Text style={styles.error}>Esse campo é obrigatório</Text>}
       <Input
@@ -95,7 +95,7 @@ function Etapa1({ navigation }) {
         control={control}
         keyboardType="numeric"
       />
-      <View style={styles.checkboxContainer}>
+      {/* <View style={styles.checkboxContainer}>
         <Checkbox
           status={checkedNumberOne ? "checked" : "unchecked"}
           onPress={() => {
@@ -123,7 +123,7 @@ function Etapa1({ navigation }) {
           uncheckedColor="#8178FF"
         />
         <Text>Esse número é WhatsApp</Text>
-      </View>
+      </View> */}
       <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.labelButton}>Continuar</Text>
       </TouchableOpacity>

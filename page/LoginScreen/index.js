@@ -15,7 +15,7 @@ import { useAuthContext } from "../../context/AuthContext";
 function LoginScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const { authData, updateAuthData } = useAuthContext(); 
+  const { authData, updateAuthData} = useAuthContext(); 
 
   const {
     handleSubmit,
@@ -42,10 +42,15 @@ function LoginScreen({ navigation }) {
           //verificar se foi aceito e redirecionar à página de confirmação
           
           const { token } = response.data;
-          console.log("Token:\n", token)
+          //const type = response.headers["content-type"];
+          
+          //console.log("Dados:\n",response)
 
           setLoading(false)
-          updateAuthData(token);
+          //setAuthToken(token);
+          AuthServices.storeToken(token)
+
+          //console.log("Token:\n", authToken, "\nType: ", type)
           navigation.navigate("Home")
         })
         .catch(error => {

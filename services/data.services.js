@@ -5,6 +5,10 @@ class DataServices {
     return api.get("/areas");
   }
 
+  getCargos() {
+    return api.get("/titles");
+  }
+
   getSubAreas() {
     return api.get("/subareas");
   }
