@@ -92,7 +92,8 @@ function Etapa4({ navigation }) {
               `Mensagem de erro: ${error.response.data.message}`);
             console.log(error.response.headers);
           }
-        });
+        }
+      );
 
       //navigation.navigate("ConfirmEmail")
       

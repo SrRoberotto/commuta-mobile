@@ -40,7 +40,6 @@ function LoginScreen({ navigation }) {
         .then(response => {
           
           //verificar se foi aceito e redirecionar à página de confirmação
-          
           const { token } = response.data;
           //const type = response.headers["content-type"];
           
@@ -68,29 +67,6 @@ function LoginScreen({ navigation }) {
           }
         });
 
-      // Alert.alert("Data", data.email);
-      // // ShowAlert("Data", data.email);
-      // console.log ("------------")
-      // console.log ("Tudo certo 1")
-      // const { signIn } = useAuth();
-
-      // // const formRef = useRef<FormHandles>(null);
-      // const handleSignIn = useCallback(async(data) => {
-        
-      //   await signIn({
-      //     email: data.email,
-      //     password: data.senha,
-      //   });
-
-      // },[signIn]);
-
-
-      // console.log ("Tudo certo 3")
-      //console.log(handleSignIn);
-      //console.log(signIn);
-      
-      //  Alert.alert("Login", "Login feito");
-      //navigation.navigate("Home")
     } catch (e) {
       setLoading(false);
       //ShowAlert("Erro", e.message);

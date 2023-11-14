@@ -102,8 +102,12 @@ function ProfileScreen({ navigation }) {
         <CustomInput label="Email:" value={userData.email} />
         <CustomInput label="Telefone:" value={userData.phone} />
         <CustomInput
+          label="Cargo:"
+          value={`${userData.title_name}`}
+        />
+        <CustomInput
           label="Profissão:"
-          value="Professor (Matemática - Estatística)"
+          value={`${userData.area_name} - ${userData.subarea_name}`}
         />
         <CustomInput
           onChangeText={()=>{return true}}

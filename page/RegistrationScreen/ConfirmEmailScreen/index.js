@@ -17,7 +17,7 @@ export default function ConfirmEmailScreen({ navigation }) {
       </View>
       <TouchableOpacity
         style={[styles.button, { marginTop: 5 }]}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("Login")}
       >
         <Text style={[styles.labelButton]}>Ok</Text>
         <AntDesign name="check" size={20} color="white" />

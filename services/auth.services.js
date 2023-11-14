@@ -17,9 +17,9 @@ class AuthServices {
   }
 
   async signOut () {
-    await AsyncStorage.multiRemove(['@Commuta:token']);
-
-    setData({});
+    const token = {}
+    api.defaults.headers.common = {'Authorization': `Bearer ${token}`}
+    console.log("Token destruido")
   }
 }
 

@@ -82,19 +82,21 @@ function Etapa1({ navigation }) {
       />
        {errors.sobrenome && <Text style={styles.error}>Esse campo é obrigatório</Text>}
       <Input
+        placeholderName={"Telefone"}
+        style={styles.input}
+        name={"telefoneOne"}
+        control={control}
+        rules={{ required: "Verifique se todos os campos estão preenchidos"}}
+        keyboardType="numeric"
+      />{errors.sobrenome && <Text style={styles.error}>Esse campo é obrigatório</Text>}
+      <Input
         placeholderName={"Código de indicação (Opcional)"}
         keyboardType="numeric"
         style={styles.input}
         name={"codigo"}
         control={control}
       />
-      <Input
-        placeholderName={"Telefone (Opcional)"}
-        style={styles.input}
-        name={"telefoneOne"}
-        control={control}
-        keyboardType="numeric"
-      />
+
       {/* <View style={styles.checkboxContainer}>
         <Checkbox
           status={checkedNumberOne ? "checked" : "unchecked"}

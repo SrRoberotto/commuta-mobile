@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Keyboard } from "react-native";
+import { View, Text, Keyboard, ScrollView } from "react-native";
 import { List } from "react-native-paper";
 
 const AccordionItem = ({ expanded, onPress, title, id, children, style, setSelectedItem }) => {

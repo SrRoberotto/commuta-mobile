@@ -20,11 +20,11 @@ import styles from "./styles";
 // "contact_title_name": "Professor EBTT"
 
 
-function CardContacts({navigation,contact,user}) {
+function CardContacts({navigation,data}) {
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Detalhes do Contato");
+        navigation.navigate("Detalhes do Contato",data);
       }}
       style={styles.card}
     >
@@ -37,13 +37,13 @@ function CardContacts({navigation,contact,user}) {
         <Avatar.Image size={48} source={require("../../assets/avatar2.png")} />
       </View>
       <View style={{ width: "80%" }}>
-        <Text style={styles.titulo}>{contact.contact_name}</Text>
-        <Text style={styles.label}>{contact.contact_title_name} ({contact.contact_subarea_name})</Text>
+        <Text style={styles.titulo}>{data.contact_name}</Text>
+        <Text style={styles.label}>{data.contact_title_name} ({data.contact_subarea_name})</Text>
         <View style={styles.containerRow}>
-          <Text style={styles.smalLabel}>{contact.contact_city_name} ({contact.contact_state_uf})</Text>
+          <Text style={styles.smalLabel}>{data.contact_city_name} ({data.contact_state_uf})</Text>
           <View style={{ flexDirection: "row" }}>
             <MaterialIcons name="loop" size={16} color="#8178FF" />
-            <Text style={styles.smalLabel}>{user.city_name} ({user.state_uf}</Text>
+            <Text style={styles.smalLabel}>user.city_name (user.state_uf)</Text>
           </View>
         </View>
       </View>

@@ -1,8 +1,14 @@
 import api from "./api-common";
 
 class ContactServices {
-    async createContact(data) {
+    async acceptContact(data) {
         const response = await api.post("/contacts",data);
+
+        return response;
+    }
+
+    async rejectContact(data) {
+        const response = await api.delete(`/contacts/${data.contact_id}`);
 
         return response;
     }
