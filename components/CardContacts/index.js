@@ -7,18 +7,6 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import styles from "./styles";
 
-// "id": 4,
-// "user_id": 3,
-// "contact_id": 2,
-// "contact_name": "Pedro",
-// "contact_organization_name": "Instituto Federal da Bahia",
-// "contact_organization_acronym": "IFBA",
-// "contact_city_name": "Eunápolis",
-// "contact_state_uf": "BA",
-// "contact_area_name": "Ciências Exatas e da Terra",
-// "contact_subarea_name": "Ciência da Computação",
-// "contact_title_name": "Professor EBTT"
-
 
 function CardContacts({navigation,data}) {
   return (

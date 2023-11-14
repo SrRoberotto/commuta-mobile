@@ -29,12 +29,6 @@ function SearchScreen() {
   const [swipeDirection, setSwipeDirection] = useState("--");
   const [isFocused, setIsFocused] = useState(false);
   const [isModalFilter, setIsModalFilter] = useState(false);
-  const [expandedArea, setExpandedArea] = useState(false);
-  const [expandedSubArea, setExpandedSubArea] = useState(false);
-  const [expandedState, setExpandedState] = useState(false);
-  const [selectedItemArea, setSelectedItemArea] = useState(null);
-  const [selectedItemSubArea, setSelectedItemSubArea] = useState(null);
-  const [selectedItemState, setSelectedItemState] = useState(null);
 
   const handleItemPress = (item, setSelectedItem,setExpanded) => {
     setSelectedItem(item);
@@ -57,17 +51,71 @@ function SearchScreen() {
     }
   };
 
-  const lastSwipedDirection = (swipeDirection) => {
-    console.log(swipeDirection)
-    setSwipeDirection(swipeDirection);
+  const lastSwipedDirection = (swipeD,params) => {
+    console.log(swipeD)
+    setSwipeDirection(swipeD);
+    if (swipeD=="Direita") handleLike(params)
+    if (swipeD=="Esquerda") handleDislike(params)
   };
+
+  const handleLike = async (params) => {
+    try {
+      console.log("Botão de like: \n",params);
+      // const dados = {contact_id: params.opportunity_id}
+      const response = await ContactServices.acceptContact(params)
+      .then(response => {
+        //verificar se foi aceito e redirecionar à página de confirmação
+        console.log("Resposta:\n", response)
+        //navigation.navigate("Home")
+      })
+      .catch(error => {
+          if (error.response) {
+            console.log("Erro retornado: ", error.response.status);
+            console.log("Dados do erro:\n",error.response.data);
+            console.log(error.response.headers);
+          }
+        }
+      );
+      //navigation.navigate("Etapa3");
+
+    } catch (e) {
+      console.log(e)
+      // setLoading(false);
+      // ShowAlert("Erro", e.message);
+    }
+  }
+
+  const handleDislike = async (params) => {
+    try {
+      console.log("Botão de dislike: \n");
+
+      const response = await ContactServices.rejectOpportunity(params)
+      .then(response => {
+        //verificar se foi aceito e redirecionar à página de confirmação
+        console.log("Resposta:\n", response.status)
+        //navigation.navigate("Home")
+      })
+      .catch(error => {
+          if (error.response) {
+            console.log("Erro retornado: ", error.response.status);
+            console.log("Dados do erro:\n",error.response.data);
+            console.log(error.response.headers);
+          }
+        }
+      );
+    } catch (e) {
+      console.log(e)
+      // setLoading(false);
+      // ShowAlert("Erro", e.message);
+    }
+  }
 
   async function fetchOportunities() {
     try {
       const response = await ContactServices.getOportunities()
         .then(response => {
           //var count = response.data.length;
-          console.log ("Resposta oportunities: ",response.data)
+          //console.log ("Resposta oportunities: ",response.data)
 
           setCardArray(response.data);
 
@@ -121,7 +169,7 @@ function SearchScreen() {
             currentIndex={index}
             key={index}
             item={item}
-            removeCard={() => removeCard(item.id)}
+            removeCard={() => removeCard(item.opportunity_id)}
             onSwipe={lastSwipedDirection}
           />
         ))}

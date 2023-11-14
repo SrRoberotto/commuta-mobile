@@ -13,7 +13,7 @@ import { useAuthContext } from "../../context/AuthContext";
 
 
 function HomeScreen({ navigation }) {
-  console.log("Navigation: ",navigation)
+  //console.log("Navigation: ",navigation)
   const [visible, setVisible] = React.useState(true)
   const [contactData, setContactData] = useState([]);
 

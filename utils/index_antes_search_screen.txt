@@ -10,15 +10,15 @@ import {
   ActivityIndicator
 } from "react-native";
 
-import CardHeader from "../../components/CardHeader";
+import CardHeader from "../components/CardHeader";
 import { TextInput, List } from "react-native-paper";
 import { EvilIcons } from "@expo/vector-icons";
-import SearchResultCard from "../../components/SearchResultCard";
-import styles from "./styles";
+import SearchResultCard from "../components/SearchResultCard";
+import styles from "../page/SearchScreen/styles";
 
 import { Ionicons } from '@expo/vector-icons'; 
-import Input from "../../components/Input";
-import AccordionItem from "../../components/AccordionItem";
+import Input from "../components/Input";
+import AccordionItem from "../components/AccordionItem";
 import { useForm } from "react-hook-form";
 
 const DATA = [

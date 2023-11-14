@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import CardHeader from "../../components/CardHeader";
+import CardHeader from "../components/CardHeader";
 import { TextInput } from "react-native-paper";
 import { EvilIcons } from "@expo/vector-icons";
 
-import SearchResultCard from "../../components/SearchResultCard/index_old";
+import SearchResultCard from "./index_old";
 const DATA = [
   {
     title: "Afro vibes",
@@ -108,7 +108,7 @@ function SearchScreen() {
             key={index}
             item={item}
             removeCard={() => removeCard(item.id)}
-            swipedDirection={lastSwipedDirection}
+            //swipedDirection={lastSwipedDirection}
           />
         ))}
         {noMoreCard ? (

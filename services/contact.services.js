@@ -13,6 +13,12 @@ class ContactServices {
         return response;
     }
 
+    async rejectOpportunity(data) {
+        const response = await api.delete(`/opportunities/${data.opportunity_id}`);
+
+        return response;
+    }
+
     async getContacts(){
         const response = await api.get("/contacts");
         

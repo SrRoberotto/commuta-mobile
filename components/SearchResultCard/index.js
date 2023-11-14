@@ -17,6 +17,7 @@ import { TouchableOpacity } from "react-native";
 import styles from "./styles";
 
 function SearchResultCard({ data, item, removeCard, onSwipe }) {
+  //console.log(data)
   const window = useWindowDimensions();
   const [cardDismissed, setCardDismissed] = useState(false);
   const [ignoredCards, setIgnoredCards] = useState([]);
@@ -63,7 +64,7 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
               useNativeDriver: false,
             }),
           ]).start(() => {
-            onSwipe("Direita");
+            onSwipe("Direita",data);
             removeCard();
           });
         } else if (gestureState.dx < -window.width + 150) {
@@ -79,7 +80,7 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
               useNativeDriver: false,
             }),
           ]).start(() => {
-            onSwipe("Esquerda");
+            onSwipe("Esquerda",data);
             removeCard();
           });
         }
@@ -97,22 +98,22 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
     >
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Avatar.Image size={100} source={require("../../assets/avatar3.png")} />
-        <Text style={styles.titulo}>Professor (Matemática)</Text>
+        <Text style={styles.titulo}>{data.title_name} ({data.subarea_name})</Text>
       </View>
 
       <View style={styles.containerRow}>
         <MaterialIcons name="apartment" size={16} color="#333333" />
         <Text style={styles.label}>
-          Instituto Federal de Educação Ciência e Tecnologia
+          {data.organization_name}
         </Text>
       </View>
       <View style={styles.containerRow}>
         <MaterialIcons name="star" size={16} color="#333333" />
-        <Text style={styles.label}>Deseja: Salvador (BA)</Text>
+        <Text style={styles.label}>Deseja: user.city_name (user.state_uf)</Text>
       </View>
       <View style={styles.containerRow}>
         <MaterialIcons name="place" size={16} color="#333333" />
-        <Text style={styles.label}>Oferece: Eunápolis (BA)</Text>
+        <Text style={styles.label}>Oferece: {data.city_name} ({data.state_uf})</Text>
       </View>
       <View
         style={[styles.containerRow, { gap: 30, justifyContent: "center" }]}
@@ -127,7 +128,7 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
               duration: 200,
               useNativeDriver: false,
             }).start(() => {
-              onSwipe("Esquerda");
+              onSwipe("Esquerda",data);
               removeCard();
             });
           }}
@@ -147,7 +148,7 @@ function SearchResultCard({ data, item, removeCard, onSwipe }) {
               duration: 200,
               useNativeDriver: false,
             }).start(() => {
-              onSwipe("Direita");
+              onSwipe("Direita",data);
               removeCard();
             });
           }}
