@@ -33,6 +33,12 @@ class ContactServices {
         return response;
     }
 
+    async getOportunities(){
+        const response = await api.get("/opportunities");
+        
+        return response;
+    }
+
 }   
 
 export default new ContactServices();
